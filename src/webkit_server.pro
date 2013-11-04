@@ -44,6 +44,7 @@ HEADERS = \
   CommandFactory.h \
   SetProxy.h \
   NullCommand.h \
+  NullIODevice.h \
   PageLoadingCommand.h \
   SetSkipImageLoading.h \
   WebPageManager.h \
@@ -108,6 +109,7 @@ SOURCES = \
   CommandFactory.cpp \
   SetProxy.cpp \
   NullCommand.cpp \
+  NullIODevice.cpp \
   PageLoadingCommand.cpp \
   SetTimeout.cpp \
   GetTimeout.cpp \

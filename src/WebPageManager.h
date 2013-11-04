@@ -5,11 +5,11 @@
 #include <QObject>
 #include <QNetworkReply>
 #include <QDebug>
-#include <QFile>
 
 class WebPage;
 class NetworkCookieJar;
 class NetworkAccessManager;
+class NullIODevice;
 
 class WebPageManager : public QObject {
   Q_OBJECT
@@ -54,7 +54,7 @@ class WebPageManager : public QObject {
     QSet<WebPage *> m_started;
     bool m_success;
     bool m_loggingEnabled;
-    QFile *m_ignoredOutput;
+    NullIODevice *m_ignoredOutput;
     int m_timeout;
     NetworkAccessManager *m_networkAccessManager;
 };
