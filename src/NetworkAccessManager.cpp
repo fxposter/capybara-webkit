@@ -12,6 +12,11 @@ NetworkAccessManager::NetworkAccessManager(QObject *parent):QNetworkAccessManage
 
 QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice * outgoingData = 0) {
   QNetworkRequest new_request(request);
+
+  QSslConfiguration ssl_config = new_request.sslConfiguration();
+  ssl_config.setProtocol(QSsl::SslV3);
+  new_request.setSslConfiguration(ssl_config);
+
   QByteArray url = new_request.url().toEncoded();
   if (this->isBlacklisted(new_request.url())) {
     return new NetworkReplyProxy(new NoOpReply(new_request), this);
@@ -62,7 +67,7 @@ void NetworkAccessManager::setPassword(const QString &password) {
 
 void NetworkAccessManager::provideAuthentication(QNetworkReply *reply, QAuthenticator *authenticator) {
   Q_UNUSED(reply);
-  if (m_userName != authenticator->user()) 
+  if (m_userName != authenticator->user())
     authenticator->setUser(m_userName);
   if (m_password != authenticator->password())
     authenticator->setPassword(m_password);
