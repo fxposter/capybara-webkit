@@ -13,6 +13,11 @@ NetworkAccessManager::NetworkAccessManager(QObject *parent):QNetworkAccessManage
 
 QNetworkReply* NetworkAccessManager::createRequest(QNetworkAccessManager::Operation operation, const QNetworkRequest &request, QIODevice * outgoingData = 0) {
   QNetworkRequest new_request(request);
+
+  QSslConfiguration ssl_config = new_request.sslConfiguration();
+  ssl_config.setPeerVerifyMode(QSslSocket::VerifyNone);
+  new_request.setSslConfiguration(ssl_config);
+
   QByteArray url = new_request.url().toEncoded();
   if (this->isBlacklisted(new_request.url())) {
     return new NetworkReplyProxy(new NoOpReply(new_request), this);
